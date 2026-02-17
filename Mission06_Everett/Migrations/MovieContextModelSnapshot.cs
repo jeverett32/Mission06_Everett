@@ -16,18 +16,34 @@ namespace Mission06_Everett.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
 
+            modelBuilder.Entity("Mission06_Everett.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Mission06_Everett.Models.Movie", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CopiedToPlex")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Edited")
@@ -41,7 +57,6 @@ namespace Mission06_Everett.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rating")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -53,39 +68,20 @@ namespace Mission06_Everett.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.ToTable("Movies");
+                    b.HasIndex("CategoryId");
 
-                    b.HasData(
-                        new
-                        {
-                            MovieId = 1,
-                            Category = "Action",
-                            Director = "Christopher Nolan",
-                            Edited = false,
-                            Rating = "PG-13",
-                            Title = "The Dark Knight",
-                            Year = 2008
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            Category = "Sci-Fi",
-                            Director = "Christopher Nolan",
-                            Edited = false,
-                            Rating = "PG-13",
-                            Title = "Inception",
-                            Year = 2010
-                        },
-                        new
-                        {
-                            MovieId = 3,
-                            Category = "Drama",
-                            Director = "Christopher Nolan",
-                            Edited = false,
-                            Rating = "PG-13",
-                            Title = "The Prestige",
-                            Year = 2006
-                        });
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("Mission06_Everett.Models.Movie", b =>
+                {
+                    b.HasOne("Mission06_Everett.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

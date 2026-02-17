@@ -9,8 +9,15 @@
 <h1>Add Movie to Collection</h1>
 
 <form method="post">
-    <label asp-for="Category">Category:</label>
-    <input asp-for="Category" required /><br />
+    <input type="hidden" asp-for="MovieId" />
+
+    <select asp-for="CategoryId" required>
+        <option value="">Select a Category</option>
+        @foreach (Category category in ViewBag.Categories)
+        {
+            <option value="@category.CategoryId">@category.CategoryName</option>
+        }
+    </select><br />
 
     <label asp-for="Title">Title:</label>
     <input asp-for="Title" required /><br />
@@ -19,10 +26,10 @@
     <input asp-for="Year" required /><br />
 
     <label asp-for="Director">Director:</label>
-    <input asp-for="Director" required /><br />
+    <input asp-for="Director" /><br />
 
     <label asp-for="Rating">Rating:</label>
-    <select asp-for="Rating" required>
+    <select asp-for="Rating">
         <option value="">Select a Rating</option>
         <option value="G">G</option>
         <option value="PG">PG</option>
@@ -38,6 +45,9 @@
 
     <label asp-for="LentTo">Lent To:</label>
     <input asp-for="LentTo" /><br />
+
+    <label asp-for="CopiedToPlex">Copied To Plex:</label>
+    <input asp-for="CopiedToPlex" required/><br />
 
     <label asp-for="Notes">Notes (Max 25 chars):</label>
     <textarea asp-for="Notes" maxlength="25"></textarea><br />
