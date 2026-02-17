@@ -1,16 +1,16 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    Form for adding or editing movies in the collection
 *@
-@{
-}
 
 @model Movie
 
 <h1>Add Movie to Collection</h1>
 
 <form method="post">
+    @* Hidden field for MovieId (used when editing existing movies) *@
     <input type="hidden" asp-for="MovieId" />
 
+    @* Category dropdown populated from database *@
     <select asp-for="CategoryId" required>
         <option value="">Select a Category</option>
         @foreach (Category category in ViewBag.Categories)
@@ -29,6 +29,7 @@
     <input asp-for="Director" /><br />
 
     <label asp-for="Rating">Rating:</label>
+    @* MPAA movie ratings dropdown *@
     <select asp-for="Rating">
         <option value="">Select a Rating</option>
         <option value="G">G</option>
